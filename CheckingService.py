@@ -12,6 +12,7 @@ class CheckingService():
             self.includedData = self.findAgreement(r1dataset.get_included(), r2dataset.get_included())
             self.excludedData = self.findAgreement(r1dataset.get_excluded(), r2dataset.get_excluded())
             self.generate(self.includedData, self.excludedData)
+            self.calculate(self.includedData, self.excludedData)
         else:
             print(f"Check the duplicate articles before rerunning the program!")
 
@@ -61,3 +62,23 @@ class CheckingService():
 Agreement matrix:
 {df}
 **********""")
+    
+    def calculate(self, includedData, excludedData):
+        ## Data obtained in the order of TP, TN, FP, FN
+        data = [includedData[0][0], excludedData[0][0], 
+                includedData[1][0], includedData[2][0]]
+        data = list(map(lambda x: int(x.split()[0]), data))
+        tp, tn, fp, fn = data
+        n = sum(data)
+        rawAgreement = (tp + tn) / n * 100
+
+        ## Calculation of Cohen's kappa
+        ## According to https://www.surgehq.ai/blog/inter-rater-reliability-metrics-understanding-cohens-kappa
+        p0 = (tp + tn) / n
+        p1 = ((tp + fn) * (tp + fp)) / n**2
+        p2 = ((tn + fn) * (tn + fp)) / n**2
+        pe = p1 + p2
+        k = (p0 - pe) / (1 - pe)
+
+        print(f"Raw agreement %: {rawAgreement}")
+        print(f"Cohen's kappa: {k}")

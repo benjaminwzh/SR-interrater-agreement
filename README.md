@@ -14,7 +14,7 @@ Duplicates will be identified based on identical titles. They should be removed 
 
 ### Output
 If duplicate article titles are found in either reviewer's data, txt file(s) will be generated in the format of `(name)_dupesIn(Location).txt`, where the location is the location of the duplicates.
-If there are no duplicates, the agreement matrix will be printed in the terminal, along with 4 txt files generated in the folder:
+If there are no duplicates, the agreement matrix, agreement %, and Cohen's kappa will be printed in the terminal, along with 4 txt files generated in the folder:
 1. includedAgreed, containing titles included by both reviewers
 2. exlcudedAgreed, containing titles excluded by both reviewers
 3. reviewer1Only, containing titles included by reviewer1 but not reviewer2
